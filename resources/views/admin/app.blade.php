@@ -109,7 +109,10 @@
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('admin/js/demo/datatables-demo.js') }}"></script>
-
+    {{-- bootbox modal --}}
+    <script type="text/javascript" src="{{ asset('admin/js/bootbox.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin/js/bootbox.locales.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin/js/custom.js') }}"></script>
     {{-- custo mjs --}}
     @yield('script')
 
