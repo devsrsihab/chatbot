@@ -85,7 +85,7 @@
             </div>
         </div>
     </div>
-    {!! Toastr::message() !!}
+   
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('admin/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -113,6 +113,9 @@
     <script type="text/javascript" src="{{ asset('admin/js/bootbox.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin/js/bootbox.locales.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin/js/custom.js') }}"></script>
+    {{-- <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    {!! Toastr::message() !!} --}}
     {{-- custo mjs --}}
     @yield('script')
 
