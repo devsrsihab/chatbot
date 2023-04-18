@@ -15,9 +15,6 @@ class ResponseController extends Controller
      */
     public function index()
     {
-        	
-// $users = User::join('posts', 'users.id', '=', 'posts.user_id')
-// ->get(['users.*', 'posts.descrption']);
         $data['responses'] = Response::join('keywords', 'keywords.id', '=', 'responses.keywords_id')
                                         ->get(
                                                 [
@@ -27,6 +24,15 @@ class ResponseController extends Controller
                                                 ]
                                             );
         return view('admin.response.view',$data);
+        // $userText ='Hey';
+        // $responses = Response::join('keywords', 'keywords.id', '=', 'responses.keywords_id')
+        // ->where('keywords.chat_keyword','like',"%$userText%")
+        // ->limit(1)
+        // ->inRandomOrder()
+        // ->get(['responses.chat_response'])
+        // ->toArray();  
+
+        // dd($responses);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Chatbot;
 
+use App\Models\Response;
 use BotMan\BotMan\BotMan;
 use App\Models\BotMessage;
 use App\Http\Controllers\Controller;
@@ -57,8 +58,20 @@ class ChatBotController extends Controller
             $userText = $message->getMessage()->getText();
             // dd($userText);
 
-
-           $keyWords = ['hi','hello','hey'];
+            $responses = Response::join('keywords', 'keywords.id', '=', 'responses.keywords_id')
+                        ->where('keywords.chat_keyword','like',"%$userText%")
+                        ->limit(1)
+                        ->inRandomOrder()
+                        ->get(['responses.chat_response'])
+                        ->toArray();                                   
+                                                    
+           
+            if(!empty($responses)){
+                $message->reply($responses[0]['chat_response']);
+            }else {
+                $message->reply("I'm sorry, but I'm unable to understand your message. Can you please provide more information or ask a specific question? I'll do my best to assist you once I understand your request.");
+            }
+           /*$keyWords = ['hi','hello','hey'];
            if (in_array($userText,$keyWords)) {
             $message->reply('Yeah Your code is work?');
 
@@ -165,7 +178,7 @@ class ChatBotController extends Controller
             else {
                 $message->reply("I'm sorry, but I'm unable to understand your message. Can you please provide more information or ask a specific question? I'll do my best to assist you once I understand your request.");
 
-            }
+            }*/
             
             //user data store in database
             $BotMessage                 = new BotMessage;

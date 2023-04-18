@@ -38,6 +38,7 @@ require __DIR__.'/auth.php';
 
 //admin
 Route::GET('/chatAdmin',[chatBotAdminController::class, 'index']);
+Route::GET('/chat',[ChatBotController::class, 'handle']);
 // Route::GET('/makeChat',[chatBotAdminController::class, 'MakeChatShow']);
 Route::GET('/userListByIp',[chatBotAdminController::class, 'userShowByIP'])->name('userList.ip');
 Route::resource('keyword', KeywordController::class);
