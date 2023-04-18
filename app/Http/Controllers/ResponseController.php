@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Keyword;
 use App\Models\Response;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Validator;
 
 class ResponseController extends Controller
 {
@@ -12,7 +15,18 @@ class ResponseController extends Controller
      */
     public function index()
     {
-        //
+        	
+// $users = User::join('posts', 'users.id', '=', 'posts.user_id')
+// ->get(['users.*', 'posts.descrption']);
+        $data['responses'] = Response::join('keywords', 'keywords.id', '=', 'responses.keywords_id')
+                                        ->get(
+                                                [
+                                                    'keywords.chat_keyword', 
+                                                    'responses.id',
+                                                    'responses.chat_response'
+                                                ]
+                                            );
+        return view('admin.response.view',$data);
     }
 
     /**
@@ -20,7 +34,8 @@ class ResponseController extends Controller
      */
     public function create()
     {
-        //
+        $data['keywords'] = Keyword::get();
+        return view('admin.response.create', $data);
     }
 
     /**
@@ -28,7 +43,26 @@ class ResponseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'keywords_id'  => 'required|integer',
+            'chat_response'  => 'required|string',
+        ]);
+
+        if ($validator->passes()) {
+            Response::create([
+                'keywords_id'     => $request->keywords_id,
+                'chat_response'     => $request->chat_response,
+            ]);
+      Toastr::success('Keyword Created Successfully', 'Success');
+
+    } else {
+        $errMsgs = $validator->messages();
+        foreach ($errMsgs->all() as $msg) {
+            Toastr::error($msg, 'Required');
+        }
+    }
+
+    return redirect()->back();
     }
 
     /**

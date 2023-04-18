@@ -39,6 +39,7 @@
                         <a class="collapse-item" href="{{ route('userList.ip') }}">Users By IP</a>
                         <a class="collapse-item" href="{{ url('makeChat') }}">Make Query</a>
                         <a class="collapse-item" href="{{ route('keyword.index') }}">Keyword</a>
+                        <a class="collapse-item" href="{{ route('reponse.index') }}">Response</a>
                     </div>
                 </div>
             </li>
