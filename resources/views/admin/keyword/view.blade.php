@@ -16,7 +16,7 @@
             <div class="row">
                 <h6 class="m-0 font-weight-bold text-primary">User Keyword Group</h6>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <button class="btn btn-info open-modal" modal-link="{{ url() }}" modal-title="Blog Category Create" modal-type="create" modal-size="large" modal-class="rubberBand animated" selector="categoryCreate">Add</button>
+                <button class="btn btn-info open-modal" modal-link="" modal-title="Blog Category Create" modal-type="create" modal-size="large" modal-class="rubberBand animated" selector="categoryCreate">Add</button>
             </div>
         </div>
         <div class="card-body">

@@ -142,8 +142,8 @@ $(document).on('click', '.open-modal', function(e) {
     var modalType = $(this).attr('modal-type');
     var modalSize = $(this).attr('modal-size');
     var className = $(this).attr('modal-class');
-    // var url = $(this).attr('modal-link');
-    var url = $(this).attr('href');
+    var url = $(this).attr('modal-link');
+    // var url = $(this).attr('href');
     var selector =$(this).attr('selector');
     //alert(modalTitle);
     if (modalType=="create") {

@@ -21,7 +21,7 @@ class chatBotAdminController extends Controller
 
     public function MakeChatShow(Request $request)
     {
-        return view('admin.user-info.make_chat');
+        return view('admin.keyword.view');
     }
 
     public function MakeChatReply(Request $request)

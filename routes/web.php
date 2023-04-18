@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KeywordController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Chatbot\ChatBotController;
 use App\Http\Controllers\admin\chatBotAdminController;
@@ -36,5 +37,6 @@ require __DIR__.'/auth.php';
 
 //admin
 Route::GET('/chatAdmin',[chatBotAdminController::class, 'index']);
-Route::GET('/makeChat',[chatBotAdminController::class, 'MakeChatShow']);
+// Route::GET('/makeChat',[chatBotAdminController::class, 'MakeChatShow']);
 Route::GET('/userListByIp',[chatBotAdminController::class, 'userShowByIP'])->name('userList.ip');
+Route::resource('keyword', KeywordController::class);

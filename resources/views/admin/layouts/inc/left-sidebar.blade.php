@@ -38,6 +38,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('userList.ip') }}">Users By IP</a>
                         <a class="collapse-item" href="{{ url('makeChat') }}">Make Query</a>
+                        <a class="collapse-item" href="{{ route('keyword.index') }}">Make Query</a>
                     </div>
                 </div>
             </li>
