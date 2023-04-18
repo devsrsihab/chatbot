@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('keywords', function (Blueprint $table) {
             $table->id();
+            $table->text('chat_keyword');
             $table->timestamps();
+        });
+        Schema::table('keywords', function (Blueprint $table) {
+            $table->index('chat_keyword');
         });
     }
 

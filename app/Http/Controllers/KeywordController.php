@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Keyword;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
+use Brian2694\Toastr\Facades\Toastr;
 class KeywordController extends Controller
 {
     /**
@@ -12,7 +13,8 @@ class KeywordController extends Controller
      */
     public function index()
     {
-        return 'ok';
+        $data['keywords'] = Keyword::get();
+        return view('admin.keyword.view',$data);
     }
 
     /**
@@ -20,7 +22,7 @@ class KeywordController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.keyword.create');
     }
 
     /**
@@ -28,8 +30,32 @@ class KeywordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'chat_keyword'  => 'required|string'
+        ]);
+
+        if ($validator->passes()) {
+
+            // $obj = new BlogCategory();
+            // $obj->name = $request->name;
+            // $obj->valid = $request->valid;
+            // $obj->save();
+
+            Keyword::create([
+                'chat_keyword'     => $request->chat_keyword
+            ]);
+      Toastr::success('Keyword Created Successfully', 'Success');
+
+    } else {
+        $errMsgs = $validator->messages();
+        foreach ($errMsgs->all() as $msg) {
+            Toastr::error($msg, 'Required');
+        }
     }
+
+    return redirect()->back();
+}
 
     /**
      * Display the specified resource.
