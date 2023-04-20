@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('keywords_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->text('chat_response');
+            $table->tinyInteger('status')->default(1)->comment('1=Active,0=Inactive');
             $table->timestamps();
         });
         

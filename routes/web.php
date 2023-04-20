@@ -36,10 +36,19 @@ Route::middleware('auth')->group(function () {
 Route::match(['get', 'post'], '/botman',[ChatBotController::class,'handle']);
 require __DIR__.'/auth.php';
 
+
+Route::middleware(['auth','verified'])->group(function(){
+
 //admin
 Route::GET('/chatAdmin',[chatBotAdminController::class, 'index']);
 Route::GET('/chat',[ChatBotController::class, 'handle']);
-// Route::GET('/makeChat',[chatBotAdminController::class, 'MakeChatShow']);
 Route::GET('/userListByIp',[chatBotAdminController::class, 'userShowByIP'])->name('userList.ip');
-Route::resource('keyword', KeywordController::class);
-Route::resource('reponse', ResponseController::class);
+Route::DELETE('/deleteUserInfo/{id}',[chatBotAdminController::class, 'deleteUserInfo'])->name('deleteUserInfo');
+Route::GET('/userInfo/pagination/',[chatBotAdminController::class, 'pagination']);
+
+Route::GET('/keyword/pagination',[KeywordController::class,'pagination']);
+Route::resource('/keywords', KeywordController::class);
+Route::GET('/response/pagination',[ResponseController::class,'pagination']);
+Route::resource('/responses', ResponseController::class);
+
+});

@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('keywords', function (Blueprint $table) {
             $table->id();
-            $table->text('chat_keyword');
+            $table->string('chat_keyword');
+            $table->tinyInteger('status')->default(1)->comment('1=Active,0=Inactive');
             $table->timestamps();
         });
-        Schema::table('keywords', function (Blueprint $table) {
-            $table->index('chat_keyword');
-        });
+        // Schema::table('keywords', function (Blueprint $table) {
+        //     $table->index('chat_keyword');
+        // });
     }
 
     /**

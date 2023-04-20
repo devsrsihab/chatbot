@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Keyword;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Validator;
 class KeywordController extends Controller
 {
     /**
@@ -13,8 +13,8 @@ class KeywordController extends Controller
      */
     public function index()
     {
-        $data['keywords'] = Keyword::get();
-        return view('admin.keyword.view',$data);
+        $data['keywords'] = Keyword::select('chat_keyword','id')->where('status',1)->paginate(3);
+        return view('admin.keyword.index',$data);
     }
 
     /**
@@ -37,24 +37,24 @@ class KeywordController extends Controller
 
         if ($validator->passes()) {
 
-            // $obj = new BlogCategory();
-            // $obj->name = $request->name;
-            // $obj->valid = $request->valid;
-            // $obj->save();
-
             Keyword::create([
-                'chat_keyword'     => $request->chat_keyword
+                'chat_keyword'  => $request->chat_keyword
             ]);
-      Toastr::success('Keyword Created Successfully', 'Success');
 
-    } else {
-        $errMsgs = $validator->messages();
-        foreach ($errMsgs->all() as $msg) {
-            Toastr::error($msg, 'Required');
+            return response()->json([
+                'status' => 200,
+                'message' => 'keyword Created Successfully'
+            ]);
+
+        } else {
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->messages()
+            ]);
+        
         }
-    }
 
-    return redirect()->back();
+
 }
 
     /**
@@ -70,7 +70,8 @@ class KeywordController extends Controller
      */
     public function edit(Keyword $keyword)
     {
-        //
+        $data['keyword'] = Keyword::find($keyword->id);
+        return view('admin.keyword.edit',$data);
     }
 
     /**
@@ -78,7 +79,30 @@ class KeywordController extends Controller
      */
     public function update(Request $request, Keyword $keyword)
     {
-        //
+         //dd($request->all());
+         $validator = Validator::make($request->all(), [
+            'chat_keyword'  => 'required|string'
+        ]);
+
+        if ($validator->passes()) {
+
+            $keyword->update([
+                'chat_keyword'  => $request->chat_keyword
+            ]);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'keyword Update Successfully'
+            ]);
+
+        } else {
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->messages()
+            ]);
+        
+        }
+
     }
 
     /**
@@ -86,6 +110,23 @@ class KeywordController extends Controller
      */
     public function destroy(Keyword $keyword)
     {
-        //
+        $Keyword = Keyword::find($keyword->id);
+
+        if ($Keyword) {
+            // $Keyword->status = 0;
+            // $Keyword->save();
+            $Keyword->delete();
+            return response()->json(['status'=>200,'message'=>'Keyword Deleted Successfully']);
+        } else {
+            return response()->json(['status'=>404,'message'=>'Keyword Not found']);
+
+        }
+    }
+
+    // pagination
+    public function pagination()
+    {
+    $data['keywords'] = Keyword::select('chat_keyword','id')->where('status',1)->paginate(3);
+    return view('admin.keyword.pagination',$data);
     }
 }

@@ -15,17 +15,36 @@ class chatBotAdminController extends Controller
 
     public function userShowByIP()
     {
-        $data['userListIpes'] = BotMessage::all();
-        return view('admin.user-info.user-info-by-ip',$data);
+        $data['userListIpes'] = BotMessage::select('id','user_ip_adress','user_message')->paginate('3');
+        return view('admin.user_info.user_info',$data);
     }
 
-    public function MakeChatShow(Request $request)
+    public function deleteUserInfo($id)
     {
-        return view('admin.keyword.view');
+        $botMessage = BotMessage::find($id);
+
+        if ($botMessage) {
+            $botMessage->delete();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Bot Message Delete Successfully'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Bot Message Id Not Found'
+            ]);
+        }
+        
+
     }
 
-    public function MakeChatReply(Request $request)
+    // pagination
+    public function pagination()
     {
-        # code...
+        $data['userListIpes'] = BotMessage::select('id','user_ip_adress','user_message')->paginate('3');
+        return view('admin.user_info.pagination',$data);
     }
+
+
 }
